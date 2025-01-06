@@ -129,6 +129,7 @@ Thêm shared-library từ GitHub bằng **Tag** hoặc **Branch**:
 ```bash
 # npm install git+https://github.com/your-org/shared-library.git#v1.0.0
 npm install git@github.com:alexlevn/nextjs-submodule-shared-libraby.git#v1.0.0
+# https://github.com/your-org/shared-library#v1.0.1
 ```
 
 - **Sử dụng Branch:**
@@ -234,3 +235,16 @@ npm install git+https://github.com/your-org/shared-library.git#v1.0.1
    - Dễ dàng nâng cấp hoặc quay lại phiên bản cũ bằng cách thay đổi tag/branch.
 
 Nếu bạn gặp khó khăn ở bất kỳ bước nào, hãy cho mình biết để hỗ trợ!
+
+## Kiểm tra
+
+package.json
+
+```json
+// "shared-library": "git@github.com:alexlevn/nextjs-submodule-shared-libraby.git#v1.0.1"
+// "shared-library": "git+https://github.com/your-org/shared-library.git#v1.0.1"
+"shared-library": "git+https://github.com/alexlevn/nextjs-submodule-shared-libraby.git#v1.0.1"
+
+// link cũ
+// "shared-libraby": "github:alexlevn/nextjs-submodule-shared-libraby#v1.0.0",
+```
