@@ -1,16 +1,7 @@
 import * as React from "react";
 
-interface ButtonProps {
-  label: string;
-  onClick: () => void;
-}
-
-const Button: React.FC<ButtonProps> = (
-  { label 
-    , onClick } : ButtonProps
-
-) => {
-  return <button onClick={onClick}>{label}</button>;
+const Button: React.FC = () => {
+  return <button style={{ color: "blue" }}>Button</button>;
 };
 
 export default Button;
