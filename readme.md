@@ -211,7 +211,8 @@ git push origin v1.0.1
 Trong dự án `webapp`, nâng cấp thư viện:
 
 ```bash
-npm install git+https://github.com/your-org/shared-library.git#v1.0.1
+# npm install git+https://github.com/your-org/shared-library.git#v1.0.2
+npm install git+https://github.com/alexlevn/nextjs-submodule-shared-libraby.git#v1.0.2
 ```
 
 ---
@@ -243,7 +244,7 @@ package.json
 ```json
 // "shared-library": "git@github.com:alexlevn/nextjs-submodule-shared-libraby.git#v1.0.1"
 // "shared-library": "git+https://github.com/your-org/shared-library.git#v1.0.1"
-"shared-library": "git+https://github.com/alexlevn/nextjs-submodule-shared-libraby.git#v1.0.1"
+"shared-library": "git+https://github.com/alexlevn/nextjs-submodule-shared-libraby.git#v1.0.2"
 
 // link cũ
 // "shared-libraby": "github:alexlevn/nextjs-submodule-shared-libraby#v1.0.0",
