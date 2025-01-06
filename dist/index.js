@@ -34,8 +34,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 var React = __importStar(require("react"));
-var Button = function (_a) {
-    var label = _a.label, onClick = _a.onClick;
-    return React.createElement("button", { onClick: onClick }, label);
+var Button = function () {
+    return React.createElement("button", { style: { color: "blue" } }, "Button");
 };
 exports.default = Button;

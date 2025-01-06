@@ -1,7 +1,3 @@
 import * as React from "react";
-interface ButtonProps {
-    label: string;
-    onClick: () => void;
-}
-declare const Button: React.FC<ButtonProps>;
+declare const Button: React.FC;
 export default Button;
