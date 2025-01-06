@@ -248,3 +248,141 @@ package.json
 // link cũ
 // "shared-libraby": "github:alexlevn/nextjs-submodule-shared-libraby#v1.0.0",
 ```
+
+## Q3
+
+```sh
+# // ..
+```
+
+Lỗi chính ở đây là **TypeScript code trong thư viện (`shared-library`) chưa được transpile sang JavaScript** trước khi sử dụng trong dự án WebApp. Do đó, khi Next.js cố gắng xử lý các file TypeScript trực tiếp từ `node_modules`, nó không thể hiểu được cú pháp TypeScript (như `interface`).
+
+---
+
+### **Cách xử lý**
+
+#### **1. Build thư viện `shared-library` trước khi sử dụng**
+
+1. **Thêm công cụ TypeScript vào `shared-library`:**
+
+   - Chuyển sang thư mục `shared-library`:
+
+```bash
+cd shared-library
+```
+
+- Cài đặt TypeScript và các công cụ cần thiết:
+
+```bash
+npm install --save-dev typescript @types/react @types/node
+```
+
+2. **Thêm file `tsconfig.json`:**
+
+   - Tạo file `tsconfig.json` trong thư mục gốc của `shared-library`:
+
+```json
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "CommonJS",
+    "jsx": "react",
+    "declaration": true,
+    "outDir": "dist",
+    "strict": true
+  },
+  "include": ["src/**/*"]
+}
+```
+
+3. **Cập nhật `package.json` của `shared-library`:**
+
+   - Thêm lệnh build:
+
+```json
+{
+  "scripts": {
+    "build": "tsc"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts"
+}
+```
+
+4. **Chạy build:**
+
+   - Tạo thư mục `dist` chứa các file JavaScript được transpile:
+     ```bash
+     npm run build
+     ```
+
+5. **Push các thay đổi lên GitHub:**
+   - Sau khi build thành công, commit và push:
+     ```bash
+     git add .
+     git commit -m "Add build system and transpile TypeScript to JavaScript"
+     git push origin main
+     ```
+
+---
+
+#### **2. Cập nhật WebApp để sử dụng thư viện đã build**
+
+1. **Cài đặt lại thư viện từ GitHub:**
+
+   - Quay lại thư mục dự án WebApp:
+     ```bash
+     cd ../webapp
+     ```
+   - Cài đặt lại thư viện `shared-library`:
+     ```bash
+     npm install git+https://github.com/your-org/shared-library.git#main
+     ```
+
+2. **Kiểm tra cấu trúc thư viện trong `node_modules`:**
+
+   - Thư mục `node_modules/shared-library/dist` phải chứa các file JavaScript:
+     ```
+     node_modules/shared-library/
+     ├── dist/
+     │   ├── index.js
+     │   ├── button.js
+     │   ├── index.d.ts
+     │   └── button.d.ts
+     ```
+
+3. **Chạy lại dự án:**
+   ```bash
+   npm run dev
+   ```
+
+---
+
+#### **3. Kiểm tra và xác nhận**
+
+1. Trang WebApp phải hiển thị component `Button` từ `shared-library` mà không còn lỗi.
+2. **Nếu vẫn có lỗi**:
+   - Kiểm tra file `package.json` của `shared-library`:
+     - Đảm bảo `main` và `types` trỏ đến đúng file trong `dist`:
+       ```json
+       "main": "dist/index.js",
+       "types": "dist/index.d.ts"
+       ```
+   - Xóa cache của `Next.js`:
+     ```bash
+     rm -rf .next
+     npm run dev
+     ```
+
+---
+
+#### **Ghi chú**
+
+1. **Để tránh quên build lại thư viện sau mỗi thay đổi:**
+
+   - Sử dụng **GitHub Actions** hoặc script tự động trong quá trình commit/push.
+
+2. **Khi sử dụng TypeScript trong thư viện:**
+   - Đảm bảo tất cả các file TypeScript được transpile trước khi sử dụng trong các dự án khác.
+
+Nếu vẫn gặp lỗi, hãy chia sẻ thêm chi tiết, mình sẽ hỗ trợ bạn khắc phục!

@@ -1,11 +1,15 @@
-import React from "react";
+import * as React from "react";
 
 interface ButtonProps {
   label: string;
   onClick: () => void;
 }
 
-const Button: React.FC<ButtonProps> = ({ label, onClick }) => {
+const Button: React.FC<ButtonProps> = (
+  { label 
+    , onClick } : ButtonProps
+
+) => {
   return <button onClick={onClick}>{label}</button>;
 };
 
